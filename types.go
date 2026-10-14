@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/JustBugLord/dexigo/chains"
-	"github.com/JustBugLord/dexigo/channels"
+	"github.com/zenviek/dexigo/chains"
+	"github.com/zenviek/dexigo/channels"
 )
 
 type Event string

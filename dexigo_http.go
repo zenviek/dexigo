@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/JustBugLord/dexigo/chains"
+	"github.com/zenviek/dexigo/chains"
 )
 
 func (okx *Okx) SearchToken(content string) (*SearchTokenResponse, error) {

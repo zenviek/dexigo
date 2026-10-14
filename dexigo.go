@@ -8,8 +8,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/JustBugLord/reqtango/v2"
 	"github.com/gorilla/websocket"
+	"github.com/zenviek/reqtango/v2"
 )
 
 type Okx struct {
