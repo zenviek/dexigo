@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net/url"
 
 	"github.com/zenviek/dexigo/chains"
 )
@@ -13,7 +14,9 @@ func (okx *Okx) SearchToken(content string) (*SearchTokenResponse, error) {
 }
 
 func (okx *Okx) SearchTokenAdvance(token string, chainType, searchType int) (*SearchTokenResponse, error) {
-	response, err := okx.rb.Get(fmt.Sprintf("https://web3.okx.com/priapi/v1/dx/trade/multi/tokens/single/search?chainType=%d&searchType=%d&inputContent=%s", chainType, searchType, token))
+	endpoint := fmt.Sprintf("%s/priapi/v1/dx/trade/multi/tokens/single/search?chainType=%d&searchType=%d&inputContent=%s",
+		okx.httpBaseUrl(), chainType, searchType, url.QueryEscape(token))
+	response, err := okx.rb.Get(endpoint)
 	if err != nil {
 		return nil, errors.New("fail to get token info: " + err.Error())
 	}
@@ -28,7 +31,9 @@ func (okx *Okx) SearchTokenAdvance(token string, chainType, searchType int) (*Se
 }
 
 func (okx *Okx) TokenInfo(address string, chainId chains.Chain) (*TokenInfoResponse, error) {
-	response, err := okx.rb.Get(fmt.Sprintf("https://web3.okx.com/priapi/v1/dx/market/v2/latest/info?tokenContractAddress=%s&chainId=%d", address, chainId))
+	endpoint := fmt.Sprintf("%s/priapi/v1/dx/market/v2/latest/info?tokenContractAddress=%s&chainId=%d",
+		okx.httpBaseUrl(), url.QueryEscape(address), chainId)
+	response, err := okx.rb.Get(endpoint)
 	if err != nil {
 		return nil, errors.New("fail to get token info: " + err.Error())
 	}
@@ -43,7 +48,7 @@ func (okx *Okx) TokenInfo(address string, chainId chains.Chain) (*TokenInfoRespo
 }
 
 func (okx *Okx) AllNetworkTokens() (*AllNetworkTokensResponse, error) {
-	response, err := okx.rb.Get("https://web3.okx.com/priapi/v1/dx/trade/multi/swap/allNetWorkTokens")
+	response, err := okx.rb.Get(okx.httpBaseUrl() + "/priapi/v1/dx/trade/multi/swap/allNetWorkTokens")
 	if err != nil {
 		return nil, err
 	}
